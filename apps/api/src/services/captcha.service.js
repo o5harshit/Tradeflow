@@ -1,4 +1,9 @@
+import dotenv from "dotenv"
+
+dotenv.config();
+
 const TURNSTILE_URL = process.env.TURNSTILE_URL;
+
 
 export const verifyCaptcha = async (token, remoteIp) => {
   if (!token) {

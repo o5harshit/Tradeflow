@@ -53,6 +53,15 @@ export const authenticateUser = async ({ email, password }) => {
     throw error;
   }
 
+  if (!user.isVerified) {
+  const error = new Error(
+    "Please verify your email before logging in"
+  );
+
+  error.statusCode = 403;
+  throw error;
+}
+
   // Update last login time
   user.lastLoginAt = new Date();
 

@@ -13,6 +13,7 @@ import {
   loginSchema,
 } from "../validations/auth.validation.js";
 import { verifyCaptchaMiddleware } from "../middleware/captcha.middleware.js";
+import { loginRateLimiter } from "../middleware/rateLimit.middleware.js";
 
 const router = express.Router();
 
@@ -27,6 +28,7 @@ router.post(
   "/login",
   validate(loginSchema),
   verifyCaptchaMiddleware,
+  loginRateLimiter,
   login
 );
 

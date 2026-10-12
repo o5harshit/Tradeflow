@@ -2,12 +2,16 @@ import {
   registerUser,
   authenticateUser,
 } from "../services/auth.service.js";
+import { sendEmailOtp } from "../services/otp.service.js";
 
 import { generateAccessToken } from "../utils/jwt.js";
 
 export const register = async (req, res, next) => {
   try {
     const user = await registerUser(req.body);
+
+    await sendEmailOtp(user.email); // sometime if the email service will give error so the user will be created but we want 
+    // user should login and when he do the trade then only he should verify his account this feature to be implenented
 
     return res.status(201).json({
       success: true,

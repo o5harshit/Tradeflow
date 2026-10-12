@@ -4,14 +4,17 @@ import dotenv from "dotenv";
 import helmet from "helmet";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
+import dns from "node:dns";
 
 import { connectDatabase } from "./src/config/database.js";
 
 import authRoutes from "./src/routes/auth.routes.js";
 import userRoutes from "./src/routes/user.routes.js";
+import verificationRoutes from "./src/routes/verification.routes.js"
 
-dotenv.config();
+dns.setServers(["8.8.8.8", "8.8.4.4"]);
 
+dotenv.config()
 const PORT = process.env.PORT || 5000;
 
 const app = express();
@@ -43,8 +46,8 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/auth", authRoutes);
-
 app.use("/api/users", userRoutes);
+app.use("/api/verification", verificationRoutes);
 
 
 
@@ -58,6 +61,8 @@ app.use((error, req, res, next) => {
     message: error.message || "Internal server error",
   });
 });
+
+
 
 
 const startServer = async () => {
